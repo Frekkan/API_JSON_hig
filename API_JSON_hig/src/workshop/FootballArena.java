@@ -21,3 +21,5 @@ public enum FootballArena
 	return city;
     }
 }
+
+//http://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/107420/period/corrected-archive/data.csv
