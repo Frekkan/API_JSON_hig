@@ -13,16 +13,16 @@ public class FootballGoalsSource implements DataSource {
 
     @Override
     public String getName() {
-        return "Antal mÃ¥l per matchdag i fotbollsallsvenskan";
+        return "Antal mål per matchdag i fotbollsallsvenskan";
     }
 
     @Override
     public String getUnit() {
-        return "Antal mÃ¥l";
+        return "Antal mål";
     }
 
     @Override
-    public Map<LocalDate, Double> getValues() {
+    public Map<LocalDate, Double> getData() {
         UrlFetcher fetcher = new UrlFetcher("http://api.everysport.com/v1/events?apikey=1769e0fdbeabd60f479b1dcaff03bf5c&league=63925&limit=50");
         JsonToMapParser parser = new JsonToMapParser(fetcher.getContent());
         Map<String, Object> data = parser.getResult();
@@ -45,6 +45,6 @@ public class FootballGoalsSource implements DataSource {
     }
 
     public static void main(String[] args) {
-        System.out.println(new FootballGoalsSource().getValues());
+        System.out.println(new FootballGoalsSource().getData());
     }
 }

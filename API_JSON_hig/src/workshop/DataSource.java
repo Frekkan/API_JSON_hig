@@ -13,5 +13,5 @@ public interface DataSource {
 
     String getUnit();
 
-    Map<LocalDate, Double> getValues();
+    Map<LocalDate, Double> getData();
 }
