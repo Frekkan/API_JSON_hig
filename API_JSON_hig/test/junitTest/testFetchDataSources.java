@@ -29,6 +29,7 @@ public class testFetchDataSources
     @Test
     public void testFetchTemperatureData()
     {
+    temperatureSource.getData();
 	assertEquals("Celsius", temperatureSource.getUnit());
     }
     @Test

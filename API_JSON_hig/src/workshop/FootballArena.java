@@ -4,7 +4,7 @@ public enum FootballArena
 {
     OLYMPIA("Olympia, Helsingborg", "Helsingborg"), 
     STROMVALLEN("Strömvallen", "Gävle"),
-    NYAPARKEN("Nya Parken", "Norrköping") ;
+    NYAPARKEN("Nya Parken", "Norrköping");
     
     private final String arenaName;
     private final String city;
