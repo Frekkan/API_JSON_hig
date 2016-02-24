@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CsvToMapParser {
 	private final String csvFileToRead;
@@ -13,28 +14,28 @@ public class CsvToMapParser {
 	private String line = "";
 	private String lineSeparator = ";";
 	private String desiredYear = "2014";
+	private Map<String, Object> data;
 
 	public CsvToMapParser(String csvFileToRead) {
 		this.csvFileToRead = csvFileToRead;
 	}
 
 	public Map<String, Object> getResult() {
-		return translatedCsv();
+		return translateCsv();
 	}
 
 	// Referens
 	// http://www.beingjavaguys.com/2013/09/read-and-parse-csv-file-in-java.html
-	private Map<String, Object> translatedCsv() {
+	private Map<String, Object> translateCsv() {
 		try {
 			reader = new BufferedReader(new FileReader(csvFileToRead));
-
+			data = new TreeMap<>();
 			while ((line = reader.readLine()) != null) {
-				if (lineIs(desiredYear)) {
+				if (lineHas(desiredYear)) {
 					String[] linePart = line.split(lineSeparator);
-					System.out.println("Date: " + linePart[2] + " Celcius: " + linePart[3]);
+					data.put(linePart[2], linePart[3]);
 				}
 			}
-
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,10 +44,10 @@ public class CsvToMapParser {
 			e.printStackTrace();
 		}
 
-		return null;
+		return data;
 	}
 
-	private boolean lineIs(String desiredYear) {
+	private boolean lineHas(String desiredYear) {
 		if (line.length() > desiredYear.length()) {
 			String lineYear = line.substring(0, 4);
 			return lineYear.equals(desiredYear);

@@ -7,21 +7,34 @@ import org.junit.Test;
 
 import workshop.FootballArena;
 
-public class TestArena
-{
-    FootballArena arena;
-    @Before
-    public void setUp() throws Exception
-    {
-	arena = FootballArena.STROMVALLEN;	
-    }
+public class TestArena {
+	FootballArena arena;
 
-    @Test
-    public void test()
-    {
-	assertEquals(FootballArena.STROMVALLEN, arena);
-	assertEquals("Gävle", arena.getCity());
-	assertEquals("Strömvallen", arena.getArenaName());
-    }
+	@Before
+	public void setUp() throws Exception {
+		arena = FootballArena.STROMVALLEN;
+	}
 
+	@Test
+	public void testArenaAlias() {
+		assertEquals(FootballArena.STROMVALLEN, arena);
+		assertNotEquals(FootballArena.NYAPARKEN, arena);
+
+	}
+
+	@Test
+	public void testgetArenaCity() {
+		assertEquals("Gävle", arena.getCity());
+	}
+
+	@Test
+	public void testGetArenaName() {
+		assertEquals("Strömvallen", arena.getArenaName());
+	}
+
+	@Test
+	public void testGetCityTemperatureURL() {
+		String gavleURL = "http://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/107420/period/corrected-archive/data.csv";
+		assertEquals(gavleURL, arena.getCityTemperatureURL());
+	}
 }
