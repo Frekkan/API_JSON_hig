@@ -28,6 +28,13 @@ public class FootballGoalsSource implements DataSource {
         Map<String, Object> data = parser.getResult();
         Map<LocalDate, Double> result = new TreeMap<>();
         for (Map event : (List<Map>) data.get("events")) {
+            Map<String, Object> facts = (Map<String, Object>) event.get("facts");
+            Map<String, Object> arena = (Map<String, Object>) facts.get("arena");
+            arena.get("name");
+            System.out.println(arena.get("name"));
+            System.out.println(facts);
+            System.out.println(arena);
+            System.out.println(event);
             LocalDate date = LocalDate.parse(event.get("startDate").toString().substring(0, 10));
             int goals = Integer.parseInt(event.get("visitingTeamScore").toString());
             goals += Integer.parseInt(event.get("homeTeamScore").toString());
@@ -43,9 +50,7 @@ public class FootballGoalsSource implements DataSource {
             result.put(date, result.get(date) + goals);
         }
     }
-
     public static void main(String[] args) {
-        System.out.println(new FootballGoalsSource().getData());
-        
+	//System.out.println();
     }
 }

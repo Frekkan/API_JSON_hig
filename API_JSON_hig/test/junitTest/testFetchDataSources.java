@@ -2,6 +2,9 @@ package junitTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +38,9 @@ public class testFetchDataSources
     @Test
     public void testFootballGoalsEqualsData()
     {
-	//assertEquals();
+	goalSource.getData();
+	//assertEquals(, goalSource.getData());
+	
 	
     }
     /*@Test
@@ -43,5 +48,6 @@ public class testFetchDataSources
     {
 	
     }*/
+     
 
 }
