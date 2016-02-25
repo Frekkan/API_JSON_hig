@@ -29,24 +29,23 @@ public class testFetchDataSources
 	assertEquals("Antal mål per matchdag i fotbollsallsvenskan", goalSource.getName());
 	assertEquals("Antal mål", goalSource.getUnit());
     }
+
     @Test
     public void testFetchTemperatureData()
     {
-    temperatureSource.getData();
+	temperatureSource.getData();
 	assertEquals("Celsius", temperatureSource.getUnit());
     }
+
     @Test
     public void testFootballGoalsEqualsData()
     {
-	goalSource.getData();	
+	goalSource.getData();
     }
+
     @Test
-    public void testGetAllStadiums()
+    public void testGetAllArenas()
     {
-	//goalSource.getData();
+	//assertEquals("name", );
     }
-
-  
-     
-
 }

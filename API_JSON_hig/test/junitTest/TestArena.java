@@ -19,7 +19,6 @@ public class TestArena {
 	public void testArenaAlias() {
 		assertEquals(FootballArena.STROMVALLEN, arena);
 		assertNotEquals(FootballArena.NYAPARKEN, arena);
-
 	}
 
 	@Test

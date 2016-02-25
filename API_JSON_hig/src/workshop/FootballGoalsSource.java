@@ -10,6 +10,8 @@ import java.util.TreeMap;
  * @author thomas
  */
 public class FootballGoalsSource implements DataSource {
+    
+    
 
     @Override
     public String getName() {
@@ -31,7 +33,7 @@ public class FootballGoalsSource implements DataSource {
             Map<String, Object> facts = (Map<String, Object>) event.get("facts");
             Map<String, Object> arena = (Map<String, Object>) facts.get("arena");
             arena.get("name");
-            //System.out.println(arena.get("name"));
+            System.out.println(arena.get("name"));
             //System.out.println(facts);
             //System.out.println(arena);
             //System.out.println(event);
@@ -51,6 +53,7 @@ public class FootballGoalsSource implements DataSource {
         }
     }
     public static void main(String[] args) {
+	new FootballGoalsSource().getData(); 
 	//System.out.println();
     }
 }
