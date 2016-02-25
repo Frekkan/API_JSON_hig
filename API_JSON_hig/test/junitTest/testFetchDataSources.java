@@ -38,16 +38,15 @@ public class testFetchDataSources
     @Test
     public void testFootballGoalsEqualsData()
     {
-	goalSource.getData();
-	//assertEquals(, goalSource.getData());
-	
-	
+	goalSource.getData();	
     }
-    /*@Test
+    @Test
     public void testGetAllStadiums()
     {
-	
-    }*/
+	//goalSource.getData();
+    }
+
+  
      
 
 }

@@ -31,10 +31,10 @@ public class FootballGoalsSource implements DataSource {
             Map<String, Object> facts = (Map<String, Object>) event.get("facts");
             Map<String, Object> arena = (Map<String, Object>) facts.get("arena");
             arena.get("name");
-            System.out.println(arena.get("name"));
-            System.out.println(facts);
-            System.out.println(arena);
-            System.out.println(event);
+            //System.out.println(arena.get("name"));
+            //System.out.println(facts);
+            //System.out.println(arena);
+            //System.out.println(event);
             LocalDate date = LocalDate.parse(event.get("startDate").toString().substring(0, 10));
             int goals = Integer.parseInt(event.get("visitingTeamScore").toString());
             goals += Integer.parseInt(event.get("homeTeamScore").toString());
