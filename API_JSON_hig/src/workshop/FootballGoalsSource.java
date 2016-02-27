@@ -10,50 +10,60 @@ import java.util.TreeMap;
  * @author thomas
  */
 public class FootballGoalsSource implements DataSource {
-    
-    
 
-    @Override
-    public String getName() {
-        return "Antal mål per matchdag i fotbollsallsvenskan";
-    }
+	private FootballArena arenaToCheck = FootballArena.STROMVALLEN;
+	private final String FOOTBALLGOALSURL = "http://api.everysport.com/v1/events?apikey=1769e0fdbeabd60f479b1dcaff03bf5c&league=63925&limit=";
+	private final String NUMBEROFGAMES = "240"; //240 is max.
 
-    @Override
-    public String getUnit() {
-        return "Antal mål";
-    }
+	@Override
+	public String getName() {
+		return "Antal mål per matchdag i fotbollsallsvenskan";
+	}
 
-    @Override
-    public Map<LocalDate, Double> getData() {
-        UrlFetcher fetcher = new UrlFetcher("http://api.everysport.com/v1/events?apikey=1769e0fdbeabd60f479b1dcaff03bf5c&league=63925&limit=50");
-        JsonToMapParser parser = new JsonToMapParser(fetcher.getContent());
-        Map<String, Object> data = parser.getResult();
-        Map<LocalDate, Double> result = new TreeMap<>();
-        for (Map event : (List<Map>) data.get("events")) {
-            Map<String, Object> facts = (Map<String, Object>) event.get("facts");
-            Map<String, Object> arena = (Map<String, Object>) facts.get("arena");
-            arena.get("name");
-            System.out.println(arena.get("name"));
-            //System.out.println(facts);
-            //System.out.println(arena);
-            //System.out.println(event);
-            LocalDate date = LocalDate.parse(event.get("startDate").toString().substring(0, 10));
-            int goals = Integer.parseInt(event.get("visitingTeamScore").toString());
-            goals += Integer.parseInt(event.get("homeTeamScore").toString());
-            addGoalsToDate(result, date, goals);
-        }
-        return result;
-    }
+	@Override
+	public String getUnit() {
+		return "Antal mål";
+	}
 
-    private void addGoalsToDate(Map<LocalDate, Double> result, LocalDate date, int goals) {
-        if (!result.containsKey(date)) {
-            result.put(date, new Double(goals));
-        } else {
-            result.put(date, result.get(date) + goals);
-        }
-    }
-    public static void main(String[] args) {
-	new FootballGoalsSource().getData(); 
-	//System.out.println();
-    }
+	@Override
+	public Map<LocalDate, Double> getData() {
+		UrlFetcher fetcher = new UrlFetcher(FOOTBALLGOALSURL + NUMBEROFGAMES);
+		JsonToMapParser parser = new JsonToMapParser(fetcher.getContent());
+		Map<String, Object> data = parser.getResult();
+		Map<LocalDate, Double> result = new TreeMap<>();
+
+		for (Map event : (List<Map>) data.get("events")) {
+			Map<String, Object> facts = (Map<String, Object>) event.get("facts");
+			if(facts.containsKey("arena")){
+				Map<String, Object> arena = (Map<String, Object>) facts.get("arena");
+				arenaIdMatchesChosenArenaId(arenaToCheck, result, event, arena);
+			}
+		}
+		return result;
+	}
+	
+	public void setArenaToCheck(FootballArena arenaToCheck){
+		this.arenaToCheck = arenaToCheck;
+	}
+
+	private void arenaIdMatchesChosenArenaId(FootballArena arenaToCheck, Map<LocalDate, Double> result, Map event,
+			Map<String, Object> arena) {
+		if (arena.get("id").toString().matches(arenaToCheck.getArenaId())) {
+			LocalDate date = LocalDate.parse(event.get("startDate").toString().substring(0, 10));
+			int goals = Integer.parseInt(event.get("visitingTeamScore").toString());
+			goals += Integer.parseInt(event.get("homeTeamScore").toString());
+			addGoalsToDate(result, date, goals);
+		}
+	}
+
+	private void addGoalsToDate(Map<LocalDate, Double> result, LocalDate date, int goals) {
+		if (!result.containsKey(date)) {
+			result.put(date, new Double(goals));
+		} else {
+			result.put(date, result.get(date) + goals);
+		}
+	}
+	public static void main(String[] args) {
+		new FootballGoalsSource().getData(); 
+	}
 }
